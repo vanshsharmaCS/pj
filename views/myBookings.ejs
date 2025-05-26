@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Bookings | Event Booking System</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container navbar-container">
+      <a href="/" class="logo">EventHub</a>
+      <div class="nav-links">
+        <a href="/dashboard" class="nav-link">Dashboard</a>
+        <a href="/events" class="nav-link">Events</a>
+        <a href="/my-bookings" class="nav-link">My Bookings</a>
+        <a href="/logout" class="nav-link">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <section class="section">
+      <h1 class="section-title">My Bookings</h1>
+      
+      <% if (bookings && bookings.length > 0) { %>
+        <div class="grid">
+          <% bookings.forEach(booking => { %>
+            <div class="card">
+              <div style="display: flex; justify-content: space-between; align-items: start;">
+                <h2 class="card-title"><%= booking.Event.title %></h2>
+                <span class="badge badge-success">Confirmed</span>
+              </div>
+              
+              <div class="card-content">
+                <div style="margin: 1rem 0; color: var(--gray-700);">
+                  <p><i class="far fa-calendar-alt"></i> <%= new Date(booking.Event.dateTime).toLocaleDateString() %></p>
+                  <p><i class="far fa-clock"></i> <%= new Date(booking.Event.dateTime).toLocaleTimeString() %></p>
+                  <p><i class="fas fa-map-marker-alt"></i> <%= booking.Event.location %></p>
+                </div>
+                
+                <form method="POST" action="/api/bookings/<%= booking.id %>">
+                  <input type="hidden" name="_method" value="DELETE">
+                  <input type="hidden" id="token-<%= booking.id %>" name="token" value="">
+                  <button type="submit" class="btn btn-danger"
+                    onclick="return confirm('Are you sure you want to cancel this booking?')">
+                    Cancel Booking
+                  </button>
+                </form>
+                <script>
+                  document.getElementById('token-<%= booking.id %>').value = document.cookie.split('; ')
+                    .find(row => row.startsWith('token='))
+                    ?.split('=')[1] || '';
+                </script>
+              </div>
+            </div>
+          <% }); %>
+        </div>
+      <% } else { %>
+        <p>You don't have any bookings yet.</p>
+      <% } %>
+    </section>
+  </div>
+</body>
+</html>

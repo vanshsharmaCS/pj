@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Events</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .event-card {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 15px;
+      background-color: #f9f9f9;
+    }
+    .event-title { font-size: 18px; font-weight: bold; margin-bottom: 5px; }
+    .event-details { color: #555; margin-bottom: 3px; }
+    .event-actions { margin-top: 10px; }
+    .btn {
+      display: inline-block;
+      padding: 5px 10px;
+      background-color: #007BFF;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      margin-right: 10px;
+    }
+    .btn-danger { background-color: #dc3545; }
+    .nav-links { margin-bottom: 20px; }
+  </style>
+</head>
+<body>
+  <div class="nav-links">
+    <a href="/dashboard" class="btn">Dashboard</a>
+    <a href="/create-event" class="btn">Create New Event</a>
+  </div>
+
+  <h2>My Events</h2>
+  
+  <% if (events && events.length > 0) { %>
+    <% events.forEach(event => { %>
+      <div class="event-card">
+        <div class="event-title"><%= event.title %></div>
+        <div class="event-details"><strong>Description:</strong> <%= event.description %></div>
+        <div class="event-details"><strong>Date/Time:</strong> <%= new Date(event.dateTime).toLocaleString() %></div>
+        <div class="event-details"><strong>Location:</strong> <%= event.location %></div>
+        <div class="event-details"><strong>Total Seats:</strong> <%= event.totalSeats %></div>
+        <div class="event-details"><strong>Available Seats:</strong> <%= event.availableSeats || event.totalSeats %></div>
+        
+        <div class="event-actions">
+          <a href="/edit-event/<%= event.id %>" class="btn">Edit</a>
+          <a href="/api/events/<%= event.id %>" class="btn btn-danger" 
+             onclick="return confirm('Are you sure you want to delete this event?')">Delete</a>
+        </div>
+      </div>
+    <% }); %>
+  <% } else { %>
+    <p>You haven't created any events yet.</p>
+  <% } %>
+  
+  <div class="nav-links">
+    <a href="/dashboard">Back to Dashboard</a>
+  </div>
+</body>
+</html>

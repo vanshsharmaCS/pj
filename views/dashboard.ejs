@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | Event Booking System</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container navbar-container">
+      <a href="/" class="logo">EventHub</a>
+      <div class="nav-links">
+        <a href="/dashboard" class="nav-link">Dashboard</a>
+        <a href="/events" class="nav-link">Events</a>
+        <a href="/my-bookings" class="nav-link">My Bookings</a>
+        <a href="/logout" class="nav-link">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <section class="section">
+      <h1 class="section-title">Welcome to Your Dashboard</h1>
+      
+      <div class="grid">
+        <div class="card">
+          <div style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem;">
+            <i class="fas fa-calendar-plus"></i>
+          </div>
+          <h2 class="card-title">Create Event</h2>
+          <p class="card-content">Create a new event and share it with others.</p>
+          <div style="margin-top: 1rem;">
+            <a href="/create-event" class="btn btn-primary">Create Event</a>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem;">
+            <i class="fas fa-list-alt"></i>
+          </div>
+          <h2 class="card-title">My Events</h2>
+          <p class="card-content">View and manage events you've created.</p>
+          <div style="margin-top: 1rem;">
+            <a href="/my-events" class="btn btn-primary">View My Events</a>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem;">
+            <i class="fas fa-search"></i>
+          </div>
+          <h2 class="card-title">Browse Events</h2>
+          <p class="card-content">Discover and book exciting events.</p>
+          <div style="margin-top: 1rem;">
+            <a href="/events" class="btn btn-primary">Browse Events</a>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem;">
+            <i class="fas fa-ticket-alt"></i>
+          </div>
+          <h2 class="card-title">My Bookings</h2>
+          <p class="card-content">View and manage your event bookings.</p>
+          <div style="margin-top: 1rem;">
+            <a href="/my-bookings" class="btn btn-primary">View Bookings</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p class="footer-text">&copy; 2023 EventHub. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
