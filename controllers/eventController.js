@@ -62,3 +62,69 @@ exports.getEventsForBooking = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+// Add pagination and filtering to getEvents method
+exports.getEvents = async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const offset = (page - 1) * limit;
+    
+    // Filter options
+    const whereClause = {};
+    
+    if (req.query.location) {
+      whereClause.location = req.query.location;
+    }
+    
+    if (req.query.dateFrom && req.query.dateTo) {
+      whereClause.dateTime = {
+        [Op.between]: [new Date(req.query.dateFrom), new Date(req.query.dateTo)]
+      };
+    } else if (req.query.dateFrom) {
+      whereClause.dateTime = {
+        [Op.gte]: new Date(req.query.dateFrom)
+      };
+    } else if (req.query.dateTo) {
+      whereClause.dateTime = {
+        [Op.lte]: new Date(req.query.dateTo)
+      };
+    }
+    
+    if (req.query.search) {
+      whereClause[Op.or] = [
+        { title: { [Op.like]: `%${req.query.search}%` } },
+        { description: { [Op.like]: `%${req.query.search}%` } }
+      ];
+    }
+    
+    // Get events with pagination
+    const { count, rows: events } = await Event.findAndCountAll({
+      where: whereClause,
+      limit,
+      offset,
+      order: [['dateTime', 'ASC']]
+    });
+    
+    // Calculate pagination metadata
+    const totalPages = Math.ceil(count / limit);
+    const hasNextPage = page < totalPages;
+    const hasPrevPage = page > 1;
+    
+    res.status(200).json({
+      success: true,
+      data: events,
+      pagination: {
+        totalItems: count,
+        totalPages,
+        currentPage: page,
+        itemsPerPage: limit,
+        hasNextPage,
+        hasPrevPage
+      }
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+};

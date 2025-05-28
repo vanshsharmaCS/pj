@@ -7,6 +7,7 @@ const authRoutes = require('./routes/authRoutes');
 const eventRoutes = require('./routes/eventRoutes');
 const bookingRoutes = require('./routes/bookingRoutes');
 const authMiddleware = require('./middlewares/auth');
+const { specs, swaggerUi } = require('./swagger');
 
 const app = express();
 
@@ -71,3 +72,6 @@ sequelize.sync({ force: true }).then(() => {
   });
 });
 app.use(express.static('public'));
+
+// Add Swagger documentation route
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
