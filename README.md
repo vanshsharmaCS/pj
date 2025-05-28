@@ -91,7 +91,7 @@ Additionally, the project implements:
 ### Dashboard & Features
 ![Dashboard](https://github.com/user-attachments/assets/fa378f31-62e7-4f48-9152-b8e77e16972f)
 
-### All Features
+### Create Events
 ![Screenshot from 2025-05-28 10-41-17](https://github.com/user-attachments/assets/2837d355-c563-48fe-b879-4e50f8b38602)
 
 
